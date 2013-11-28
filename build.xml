@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="interview-coding-question" basedir="." default="help">
+
+    <property name="output.dir" location="build/classes"/>
+
+    <path id="classpath.test">
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${output.dir}"/>
+    </path>
+    <target name="compile">
+        <mkdir dir="build/classes" />
+        <javac destdir="${output.dir}" srcdir="src/main/java" debug="true" deprecation="on"/>
+    </target>
+
+    <target name="compile-test" depends="compile">
+        <javac destdir="${output.dir}" srcdir="src/test/java" debug="true" deprecation="on" classpathref="classpath.test"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="test" depends="compile-test" >
+        <junit haltonerror="false" haltonfailure="false">
+            <classpath refid="classpath.test" />
+            <formatter type="brief" usefile="false" />
+            <test name="com.mtfuji.priorityqueue.PrioritizationTest"/>
+        </junit>
+    </target>
+
+    <target name="help">
+        <echo message="Available Targets: "/>
+        <echo message="    compile: builds java classes from the src directory to the build/classes directory"/>
+        <echo message="    clean: deletes the build directory"/>
+        <echo message="    test: runs a simplistic test of the TokenPrioritization class"/>
+    </target>
+
+</project>
